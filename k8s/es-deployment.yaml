@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: es
+  labels:
+    app: es
+spec:
+  selector:
+    matchLabels:
+      app: es
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: es
+    spec:
+      containers:
+      - name: es
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: devpass
+        - name: MARIADB_DATABASE
+          value: ums
+        - name: MARIADB_USER
+          value: dev
+        - name: MARIADB_PASSWORD
+          value: devpass
