@@ -1,0 +1,13 @@
+## First stage, installing dependencies and building
+FROM node:16.20.2-slim as builder
+
+WORKDIR ./app
+
+COPY . ./
+
+RUN yarn install && yarn build
+
+## Second stage, nginx
+FROM nginx:1.25.2-alpine3.18-slim
+
+COPY --from=builder /app/dist /usr/share/nginx/html
