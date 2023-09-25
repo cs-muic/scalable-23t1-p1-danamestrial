@@ -2,8 +2,6 @@ version: '3'
 
 volumes:
   data:
-  cache:
-    driver: local
 
 networks:
   ums-back-office:
@@ -26,11 +24,8 @@ services:
   cache:
     image: redis:7.2.1-alpine
     restart: always
-    ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --requirepass devpass
-    volumes:
-      - cache:/data
+    networks:
+      - ums-back-office
 
   backend:
     image: demo
