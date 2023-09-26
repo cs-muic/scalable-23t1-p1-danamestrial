@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - image: ghcr.io/cs-muic/scalable-23t1-p1-danamestrial/ums-backend:main
+          imagePullPolicy: Always
+          name: backend
+          env:
+          - name: UMS_DB_NAME
+            value: ums
+          - name: UMS_DB_USERNAME
+            value: dev
+          - name: UMS_DB_PASSWORD
+            value: devpass
+          - name: UMS_DB_PORT
+            value: "3306"
+          - name: UMS_DB_IP
+            value: mariadb
+          ports:
+          - containerPort: 8080
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
+
