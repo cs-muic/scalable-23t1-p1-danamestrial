@@ -3,7 +3,7 @@ FROM maven:3.8.6-jdk-11-slim AS builder
 
 ## Copy file to build
 WORKDIR /project
-COPY . /project
+COPY ./backend /project
 
 RUN mvn clean package
 

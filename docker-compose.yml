@@ -21,7 +21,7 @@ services:
       MARIADB_USER: dev
       MARIADB_PASSWORD: devpass
 
-  cache:
+  redis:
     image: redis:7.2.1-alpine
     restart: always
     networks:
@@ -29,12 +29,14 @@ services:
 
   backend:
     image: demo
-    build: ./backend
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-backend
     container_name: dd-backend
     restart: on-failure
     depends_on:
       - db
-      - cache
+      - redis
     networks:
       - ums-back-office
       - ums-user-facing
@@ -47,7 +49,9 @@ services:
 
   frontend:
     image: fedemo
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-frontend
     container_name: dd-frontend
     networks:
       - ums-user-facing

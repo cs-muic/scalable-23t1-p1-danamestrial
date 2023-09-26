@@ -3,7 +3,7 @@ FROM node:16.20.2-slim as builder
 
 WORKDIR ./app
 
-COPY . ./
+COPY ./frontend ./
 
 RUN yarn install && yarn build
 
