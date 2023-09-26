@@ -28,7 +28,7 @@ spec:
           - name: UMS_DB_PORT
             value: "3306"
           - name: UMS_DB_IP
-            value: es
+            value: mariadb
           ports:
           - containerPort: 8080
       imagePullSecrets:

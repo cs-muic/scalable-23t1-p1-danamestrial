@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: es
+  name: mariadb
   labels:
-    app: es
+    app: mariadb
 spec:
   selector:
     matchLabels:
-      app: es
-  replicas: 1
+      app: mariadb
   template:
     metadata:
       labels:
-        app: es
+        app: mariadb
     spec:
       containers:
-      - name: es
+      - name: mariadb
         image: mariadb:latest
         ports:
         - containerPort: 3306
+          name: mariadb
         env:
         - name: MARIADB_ROOT_PASSWORD
           value: devpass
@@ -28,3 +28,10 @@ spec:
           value: dev
         - name: MARIADB_PASSWORD
           value: devpass
+        volumeMounts:
+          - name: mariadb-pv
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-pv
+          persistentVolumeClaim:
+            claimName: mariadb-pv-claim
